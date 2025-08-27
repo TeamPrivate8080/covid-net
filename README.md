@@ -13,7 +13,7 @@ This repository contains two main engines:
 
 | Method  | Description |
 |---------|------------|
-| TCP     | Strong TCP Flood with multiplexed packets & connections. Works with scanned bots by default.
+| TCP     | Strong TCP Flood with multiplexed packets & connections. Work great for SSH, Web, RDP ports
 
 * 🧨 Layer7:
 
