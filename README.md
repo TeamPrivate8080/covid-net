@@ -13,7 +13,7 @@ This repository contains two main engines:
 
 | Method  | Description |
 |---------|------------|
-| TCP     | Strong TCP Flood with multiplexed packets & connections. Work great for SSH, Web, RDP ports - More proxies, more power
+| TCP     | Strong TCP Flood with multiplexed packets & connections. Work great for SSH, Web, RDP ports - (Power depends on your server & bots)
 
 * 🧨 Layer7:
 
