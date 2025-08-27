@@ -1,20 +1,24 @@
 # Covid V2 Driven Network
-
-**Please Don't Attack websites without the owner's consent.**  
+> ⚠️ Please don't attack websites without the owner's consent.  
 
 This repository contains two main engines:
 
 1. **Core Attack Tool** (`go run main.go`) – The core engine of the Covid network controller.  
-2. **Bot Scanner** (`go run BotScan.go`) – Scans and analyzes your proxy bots worldwide.
+2. **Bot Scanner** (`go run BotScan.go`) – Scans and analyzes your proxy bots worldwide.  
 
-> ⚠️ **Warning:** Only use these tools for local testing or on systems you own with explicit permission. Unauthorized use is illegal.
+> ⚠️ Warning: Only use these tools for local testing or on systems you own with explicit permission. Unauthorized use is illegal.
 
-## Features And Methods
+---
 
- * 💣 Layer4
+## Features & Methods
 
-   * <img src="https://raw.githubusercontent.com/kgretzky/pwndrop/master/media/pwndrop-logo-512.png" width="16" height="16" alt="tcp"> TCP | Strong TCP Flood multiplexed packets & connections, works with scanned bots by default.
+### 💣 Layer4
 
+| Method | Description |
+|--------|------------|
+| TCP    | Strong TCP Flood with multiplexed packets & connections. Works with scanned bots by default. |
+
+---
 
 ## Requirements
 
@@ -23,11 +27,41 @@ This repository contains two main engines:
 - Input file: `proxies.txt` (non-scanned)
 - Output file: `working.txt` (after scanning)
 
-## Installation
+---
 
-Clone the repository and download dependencies:
+## Fresh Installation (Linux / WSL)
+
+Run these commands to install dependencies, clone the repo, and prepare the environment:
 
 ```bash
+# Update package lists
+sudo apt update && sudo apt upgrade -y
+
+# Install Git if not installed
+sudo apt install git -y
+
+# Install wget & tar for Go installation
+sudo apt install wget tar -y
+
+# Download Go 1.20+ (update version if needed)
+wget https://go.dev/dl/go1.20.10.linux-amd64.tar.gz
+
+# Remove old Go installation if exists
+sudo rm -rf /usr/local/go
+
+# Extract Go to /usr/local
+sudo tar -C /usr/local -xzf go1.20.10.linux-amd64.tar.gz
+
+# Set Go environment variables
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# Verify Go installation
+go version
+
+# Clone the repository
 git clone https://github.com/TeamPrivate8080/covid-net.git
 cd covid-net
+
+# Download dependencies
 go mod tidy
