@@ -19,7 +19,7 @@ This repository contains two main engines:
 
 | Method    | Description |
 |-----------|------------|
-| HTTP-SPAM | [SOON] Powerful multiplexed rotating bot flood with a high number of legitimate requests
+| HTTP-SPAM | [SOON] Powerful multiplexed rotating bot flood with a high number of legitimate requests (Up to 40 million requests a second on a dedicated)
 
 
 ## Requirements
