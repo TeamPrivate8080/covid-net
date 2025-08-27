@@ -67,3 +67,7 @@ cd covid-net
 
 # Download dependencies
 go mod tidy
+```
+
+
+<img width="1014" height="501" alt="image" src="https://github.com/user-attachments/assets/c2133057-d3ad-43a5-ba4c-82681cf4f750" />
