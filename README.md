@@ -70,4 +70,7 @@ go mod tidy
 ```
 
 
-<img width="1014" height="501" alt="image" src="https://github.com/user-attachments/assets/c2133057-d3ad-43a5-ba4c-82681cf4f750" />
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/c2133057-d3ad-43a5-ba4c-82681cf4f750" width="49%" />
+  <img src="https://github.com/user-attachments/assets/d216a2cf-b947-43c5-ab8d-07aaa1617a93" width="49%" />
+</p>
