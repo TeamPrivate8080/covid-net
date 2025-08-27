@@ -69,8 +69,7 @@ cd covid-net
 go mod tidy
 ```
 
-
 <p float="left">
-  <img src="https://github.com/user-attachments/assets/c2133057-d3ad-43a5-ba4c-82681cf4f750" width="49%" />
+  <img src="https://github.com/user-attachments/assets/78fa0f68-7cd3-4e05-b549-d25ba7b0ff2f" width="49%" />
   <img src="https://github.com/user-attachments/assets/d216a2cf-b947-43c5-ab8d-07aaa1617a93" width="49%" />
 </p>
