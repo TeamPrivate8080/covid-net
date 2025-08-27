@@ -22,7 +22,7 @@ This repository contains two main engines:
 
 | Method    | Description |
 |-----------|------------|
-| HTTP-SPAM | [SOON] Powerful multiplexed bot flood with a high number of legitimate requests
+| HTTP-SPAM | [SOON] Powerful multiplexed rotating bot flood with a high number of legitimate requests
 
 
 ## Requirements
