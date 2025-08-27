@@ -4,7 +4,7 @@
 This repository contains two main engines:
 
 1. **Core Attack Tool** (`go run main.go`) – The core engine of the Covid network controller.  
-2. **Bot Scanner** (`go run BotScan.go`) – Scans and analyzes your proxy bots worldwide.  
+2. **Bot Scanner** (`go run BotScan.go`) – Scans and analyzes your proxy bots worldwide. You can stop the bot scanner at any time, each bot will be stored immediately once it is scanned and works successfully
 ---
 
 ## Features & Methods
