@@ -10,7 +10,6 @@ import (
 	"sync/atomic"
 	"syscall"
 	"time"
-
 	"golang.org/x/net/proxy"
 )
 
