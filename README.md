@@ -1,5 +1,6 @@
 # Covid V2 Driven Network
-> ⚠️ Please don't attack websites without the owner's consent.  
+> ⚠️ Please don't attack websites without the owner's consent.
+> This isn't a botnet or malware source. Everything you do is scanned or sent from your own server.
 
 This repository contains two main engines:
 
