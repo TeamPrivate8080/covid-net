@@ -28,6 +28,6 @@ This repository contains two main engines:
 Clone the repository and download dependencies:
 
 ```bash
-git clone https://github.com/bliphotelnl-hash/covid-net.git
+git clone https://github.com/TeamPrivate8080/covid-net.git
 cd covid-net
 go mod tidy
