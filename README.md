@@ -12,13 +12,18 @@ This repository contains two main engines:
 
 ## Features & Methods
 
-### 💣 Layer4
+* 💣 Layer4
 
-| Method | Description |
-|--------|------------|
-| TCP    | Strong TCP Flood with multiplexed packets & connections. Works with scanned bots by default. |
+| Method  | Description |
+|---------|------------|
+| TCP     | Strong TCP Flood with multiplexed packets & connections. Works with scanned bots by default.
 
----
+* 🧨 Layer7:
+
+| Method    | Description |
+|-----------|------------|
+| HTTP-SPAM | [SOON] Powerful multiplexed bot flood with a high number of legitimate requests
+
 
 ## Requirements
 
